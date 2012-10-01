@@ -8,10 +8,15 @@
 
 namespace Ailove\FormTypesBundle\Form\Type\Filter;
 
-use Sonata\AdminBundle\Form\Type\Filter\NumberType;
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\FormTypeInterface;
 use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormInterface;
+use Symfony\Component\Translation\TranslatorInterface;
 
-class DatepickerFilterType extends NumberType
+use Symfony\Component\Optionsresolver\OptionsResolverInterface;
+
+class DatepickerFilterType extends AbstractType
 {
 
     const TYPE_GREATER_EQUAL = 1;
@@ -23,9 +28,27 @@ class DatepickerFilterType extends NumberType
     const TYPE_LESS_EQUAL = 4;
 
     const TYPE_LESS_THAN = 5;
+
+    protected $translator;
+
     /**
-     * @param \Symfony\Component\Form\FormBuilder $builder
-     * @param array $options
+     * @param \Symfony\Component\Translation\TranslatorInterface $translator
+     */
+    public function __construct(TranslatorInterface $translator)
+    {
+        $this->translator = $translator;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    public function getName()
+    {
+        return 'sonata_type_filter_datepicker';
+    }
+
+    /**
+     * {@inheritDoc}
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
@@ -43,4 +66,14 @@ class DatepickerFilterType extends NumberType
         ;
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    public function setDefaultOptions(OptionsResolverInterface $resolver)
+    {
+        $resolver->setDefaults(array(
+            'field_type'       => 'date',
+            'field_options'    => array('date_format' => 'yyyy-MM-dd')
+        ));
+    }
 }
