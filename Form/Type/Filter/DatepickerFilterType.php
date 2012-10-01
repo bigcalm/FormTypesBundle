@@ -9,7 +9,7 @@
 namespace Ailove\FormTypesBundle\Form\Type\Filter;
 
 use Sonata\AdminBundle\Form\Type\Filter\NumberType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class DatepickerFilterType extends NumberType
 {
@@ -27,7 +27,7 @@ class DatepickerFilterType extends NumberType
      * @param \Symfony\Component\Form\FormBuilder $builder
      * @param array $options
      */
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $choices = array(
             self::TYPE_EQUAL            => $this->translator->trans('label_type_equal', array(), 'SonataAdminBundle'),

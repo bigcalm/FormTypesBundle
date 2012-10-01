@@ -9,14 +9,14 @@
 namespace Ailove\FormTypesBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
-use Symfony\Component\Form\FormBuilder;
+use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\Form\FormView;
 use Symfony\Component\Form\FormInterface;
 
 class FromToType extends AbstractType
 {
 
-    public function buildForm(FormBuilder $builder, array $options)
+    public function buildForm(FormBuilderInterface $builder, array $options)
     {
 //
         $builder->resetClientTransformers();
@@ -32,7 +32,7 @@ class FromToType extends AbstractType
         );
     }
 
-    public function getParent(array $options)
+    public function getParent()
     {
         return 'number';
     }
