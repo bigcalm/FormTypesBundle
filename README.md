@@ -50,6 +50,7 @@ public function registerBundles()
 ### Step 4: Import twig fields template to your config.yml
 
 ``` yml
+# app/config.yml
 twig:
     form:
         resources:
@@ -64,6 +65,7 @@ Configuration is done with the twig global `form_types_jquery_ui` array in confi
 You can either place your options directly in app/config.yml:
 
 ``` yml
+# app/config.yml
 twig:
     global:
         form_types_jquery_ui:
