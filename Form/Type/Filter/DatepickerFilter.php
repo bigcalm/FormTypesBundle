@@ -50,10 +50,16 @@ class DatepickerFilter extends \Sonata\DoctrineORMAdminBundle\Filter\NumberFilte
      */
     public function filter(ProxyQueryInterface $queryBuilder, $alias, $field, $data)
     {
-        if (!$data || !is_array($data) || !array_key_exists('value', $data) || !preg_match('/^\d{2}.\d{2}.\d{4}$/', $data['value'])) {
+
+        if (!$data || !is_array($data) || !array_key_exists('value', $data)) {
             return;
         }
 
+        if (is_object($data['value']))
+            $data['value'] = $data['value']->format('d.m.Y');
+
+        if (!preg_match('/^\d{2}.\d{2}.\d{4}$/', $data['value']))
+            return;
 
         $type = isset($data['type']) ? $data['type'] : false;
 

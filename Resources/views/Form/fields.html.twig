@@ -11,9 +11,14 @@
     {% set full_name  = tmp_full_name ~ '[end]' %}
     <input {{ block('widget_attributes') }} type="text" {% if value is not empty %}value="{{ value.end }}" {% endif %} />
 {% endif %}
+
 <script>
     $(function(){
-        $('input.sonata-datepicker').datepicker($.datepicker.regional['{{ locale }}']);
+        $('input.sonata-datepicker').datepicker({
+            {% for key, value in form_types_jquery_ui.datepicker %}
+                {{ key }}: '{{ value }}'{% if loop.last %}{% else %},{% endif %}
+            {% endfor %}
+        });
     });
 </script>
 {% endblock %}

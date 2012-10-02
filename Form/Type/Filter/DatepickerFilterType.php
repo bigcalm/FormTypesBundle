@@ -18,7 +18,6 @@ use Symfony\Component\Optionsresolver\OptionsResolverInterface;
 
 class DatepickerFilterType extends AbstractType
 {
-
     const TYPE_GREATER_EQUAL = 1;
 
     const TYPE_GREATER_THAN = 2;

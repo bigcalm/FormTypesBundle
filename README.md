@@ -1,26 +1,37 @@
 # How to install
 
 
-### Step 0: Modify deps
-``` yml
-[FormTypesBundle]
-    git=git://github.com/ailove-dev/FormTypesBundle.git
-    target=/bundles/Ailove/FormTypesBundle
+### Step 1: Modify composer.json
+``` json
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "ailove-dev/form-types-bundle",
+                "version": "dev-master",
+                "source": {
+                    "url": "git://github.com/bigcalm/FormTypesBundle.git",
+                    "type": "git",
+                    "reference": "master"
+                },
+                "autoload": {
+                    "psr-0": {"Ailove\\FormTypesBundle": ""}
+                },
+                "target-dir": "Ailove/FormTypesBundle"
+            }
+        }
+    ],
+    "require": {
+        ...
+        "ailove-dev/form-types-bundle": "dev-master"
+    }
 ```
 
-### Step 1: Configure the Autoloader
-Add a new namespace to your autoload
-
-``` php
-<?php
-// app/autoload.php
-
-$loader->registerNamespaces(array(
-    // ...
-    'Ailove' => __DIR__.'/../vendor/bundles',
-));
+### Step 2: Update vendors
+``` sh
+composer update
 ```
-### Step 2: Enable the bundle
+### Step 3: Enable the bundle
 Finally, enable the bundle in the kernel:
 
 ``` php
@@ -43,9 +54,36 @@ twig:
     form:
         resources:
             - 'AiloveFormTypesBundle:Form:fields.html.twig'
+
 ```
 
-### Step 4: How to use form types
+### Step 5: Configure the bundle
+
+Configuration is done with the twig global `form_types_jquery_ui` array in config.yml
+
+You can either place your options directly in app/config.yml:
+
+``` yml
+twig:
+    global:
+        form_types_jquery_ui:
+```
+
+Or you can reference them from app/parameters.yml
+``` yml
+# app/config.yml
+twig:
+    global:
+        form_types_jquery_ui: %form_types_jquery_ui%
+
+# app/parameters.yml
+parameters:
+    form_types_jquery_ui:
+        datepicker:
+            dateFormat: dd.mm.yy
+```
+
+### Step 5: How to use form types
 
 #### Datepicker
 
@@ -59,7 +97,7 @@ FormFields
     {
         $formMapper
             ...
-            ->add('startDate', 'sonata_type_datepicker', array('locale' => 'ru') )
+            ->add('startDate', 'sonata_type_datepicker')
             ...
         ;
     }
@@ -72,10 +110,7 @@ Filters
 protected function configureDatagridFilters(DatagridMapper $datagridMapper)
 {
 	$datagridMapper
-	    ->add('startDate', 'doctrine_orm_datepicker', array(), 'sonata_type_datepicker', array('locale' => 'ru'))
+	    ->add('startDate', 'doctrine_orm_datepicker', array(), 'sonata_type_datepicker')
 	;
 }
 ```
-
-option locale represents localization value of jquery datepicker.
-
